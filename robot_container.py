@@ -14,7 +14,7 @@ from robot_state import RobotState
 from subsystems.superstructure import Superstructure
 
 from subsystems.climber import ClimberSubsystem
-from subsystems.pivot import Pivot
+from subsystems.pivot import PivotSubsystem
 from subsystems.intake import Intake
 
 
@@ -34,11 +34,8 @@ class RobotContainer:
         self.trigger_margin = .75
 
         self.drivetrain = TunerConstants.create_drivetrain()
-
         self.climber = ClimberSubsystem()
-        self.superstructure = Superstructure(self.drivetrain)
-
-        self.pivot = Pivot()
+        self.pivot = PivotSubsystem()
         self.intake = Intake()
 
         self.superstructure = Superstructure(self.drivetrain, self.pivot)

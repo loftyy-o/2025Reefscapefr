@@ -4,14 +4,14 @@ from commands2 import Command, Subsystem, cmd
 from wpilib import DriverStation, SmartDashboard
 
 from subsystems.swerve import SwerveSubsystem
-from subsystems.pivot import Pivot
+from subsystems.pivot import PivotSubsystem
 
 class Superstructure(Subsystem):
         
     class Goal(Enum):
         DEFAULT = auto()
 
-    def __init__(self, drivetrain: SwerveSubsystem, pivot: Pivot) -> None:
+    def __init__(self, drivetrain: SwerveSubsystem, pivot: PivotSubsystem) -> None:
         super().__init__()
 
         self.drivetrain = drivetrain
@@ -31,7 +31,7 @@ class Superstructure(Subsystem):
         
         match self._goal:
             case self.Goal.DEFAULT:
-                self.pivot.set_desired_state(Pivot.SubsystemState.STOW)
+                self.pivot.set_desired_state(PivotSubsystem.SubsystemState.STOW)
                 
         
     def _set_goal(self, goal: Goal) -> None:
