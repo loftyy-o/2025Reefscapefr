@@ -43,6 +43,7 @@ class PivotSubsystem(StateSubsystem):
         Constants.PivotConstants.GEAR_RATIO
     )
     _follower_config.with_slot0(Constants.PivotConstants.GAINS)
+    _follower_config.motor_output.inverted = InvertedValue.CLOCKWISE_POSITIVE
 
     def __init__(self) -> None:
         super().__init__("Pivot")
