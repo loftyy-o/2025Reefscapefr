@@ -26,8 +26,9 @@ class Constants:
             .with_k_v(0.0)
             .with_k_a(0.0)
         )
-    
+
     class ElevatorConstants:
+
         L1_SCORE_POSITION = 1 # Placeholders
         L2_SCORE_POSITION = 2
         L3_SCORE_POSITION = 3
@@ -35,6 +36,7 @@ class Constants:
         L2_ALGAE_POSITION = 2.5
         L3_ALGAE_POSITION = 3.5
         NET_SCORE_POSITION = 5
+
         DEFAULT_POSITION = 0
 
         GEAR_RATIO = 31/4 # Placeholder
