@@ -89,40 +89,33 @@ class PivotSubsystem(StateSubsystem):
             return
 
         match desired_state:
+        
             case self.SubsystemState.STOW:
                 self._position_request.position = Constants.PivotConstants.STOW_ANGLE
+            
             case self.SubsystemState.GROUND_INTAKE:
-                self._position_request.position = (
-                    Constants.PivotConstants.GROUND_INTAKE_ANGLE
-                )
+                self._position_request.position = Constants.PivotConstants.GROUND_INTAKE_ANGLE
+            
             case self.SubsystemState.FUNNEL_INTAKE:
-                self._position_request.position = (
-                    Constants.PivotConstants.FUNNEL_INTAKE_ANGLE
-                )
+                self._position_request.position = Constants.PivotConstants.FUNNEL_INTAKE_ANGLE
+            
             case self.SubsystemState.HIGH_SCORING:
-                self._position_request.position = (
-                    Constants.PivotConstants.HIGH_SCORING_ANGLE
-                )
+                self._position_request.position = Constants.PivotConstants.HIGH_SCORING_ANGLE
+            
             case self.SubsystemState.MID_SCORING:
-                self._position_request.position = (
-                    Constants.PivotConstants.MID_SCORING_ANGLE
-                )
+                self._position_request.position = Constants.PivotConstants.MID_SCORING_ANGLE
+            
             case self.SubsystemState.LOW_SCORING:
-                self._position_request.position = (
-                    Constants.PivotConstants.LOW_SCORING_ANGLE
-                )
+                self._position_request.position = Constants.PivotConstants.LOW_SCORING_ANGLE
+            
             case self.SubsystemState.NET_SCORING:
-                self._position_request.position = (
-                    Constants.PivotConstants.NET_SCORING_ANGLE
-                )
+                self._position_request.position = Constants.PivotConstants.NET_SCORING_ANGLE
+            
             case self.SubsystemState.PROCESSOR_SCORING:
-                self._position_request.position = (
-                    Constants.PivotConstants.PROCESSOR_SCORING_ANGLE
-                )
+                self._position_request.position = Constants.PivotConstants.PROCESSOR_SCORING_ANGLE
+            
             case self.SubsystemState.ALGAE_INTAKE:
-                self._position_request.position = (
-                    Constants.PivotConstants.ALGAE_INTAKE_ANGLE
-                )
+                self._position_request.position = Constants.PivotConstants.ALGAE_INTAKE_ANGLE
 
         self._subsystem_state = desired_state
         self._master_motor.set_control(self._position_request)
