@@ -44,12 +44,12 @@ class ClimberSubsystem(StateSubsystem):
         match self._subsystem_state:
             case self.SubsystemState.STOP:
                 self._climb_request.output = 0
-                self.climbServo.setAngle = 180
+                self.climbServo.setAngle(180)
             case self.SubsystemState.CLIMB_POSITIVE:
                 self._climb_request.output = 0.5
-                self.climbServo.setAngle = 0
+                self.climbServo.setAngle(0)
             case self.SubsystemState.CLIMB_NEGATIVE:
                 self._climb_request.output = -0.5
-                self.climbServo.setAngle = 0
+                self.climbServo.setAngle(0)
 
         self._climb_motor.set_control(self._climb_request)
