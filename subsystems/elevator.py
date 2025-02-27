@@ -56,7 +56,7 @@ class ElevatorSubsystem(StateSubsystem):
                      .with_motor_output(MotorOutputConfigs().with_neutral_mode(NeutralModeValue.BRAKE).with_inverted(InvertedValue.CLOCKWISE_POSITIVE))
                      .with_feedback(FeedbackConfigs().with_sensor_to_mechanism_ratio(Constants.ElevatorConstants.GEAR_RATIO))
                      .with_motion_magic(MotionMagicConfigs()
-                                        .with_motion_magic_acceleration(Constants.ElevatorConstants.MM_ACCELERATION)
+                                        .with_motion_magic_acceleration(Constants.ElevatorConstants.MM_UPWARD_ACCELERATION)
                                         .with_motion_magic_cruise_velocity(Constants.ElevatorConstants.CRUISE_VELOCITY)
                                         # .with_motion_magic_expo_k_v(Constants.ElevatorConstants.EXPO_K_V)
                                         # .with_motion_magic_expo_k_a(Constants.ElevatorConstants.EXPO_K_A)
@@ -91,7 +91,11 @@ class ElevatorSubsystem(StateSubsystem):
         self._candi = CANdi(Constants.CanIDs.ELEVATOR_CANDI)
         self._candi.configurator.apply(self._candi_config)
 
-        self._position_request = DynamicMotionMagicVoltage(0)
+        self._position_request = DynamicMotionMagicVoltage(0,
+                                                            Constants.ElevatorConstants.CRUISE_VELOCITY,
+                                                            Constants.ElevatorConstants.MM_UPWARD_ACCELERATION,
+                                                            100000000000
+                                                            )
 
         self._brake_request = VoltageOut(0)
         self._sys_id_request = VoltageOut(0)
