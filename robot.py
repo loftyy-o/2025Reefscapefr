@@ -69,6 +69,14 @@ class OilSpill(TimedCommandRobot):
 
     def teleopExit(self) -> None:
         DataLogManager.log("Teleoperated period ended")
+        if DriverStation.isFMSAttached():
+            elasticlib.send_notification(
+                Notification(
+                    level=NotificationLevel.INFO.value,
+                    title="Good match!",
+                    description="(again)" if DriverStation.getReplayNumber() > 1 else ""
+                )
+            )
 
     def testInit(self):
         DataLogManager.log("Test period started")
