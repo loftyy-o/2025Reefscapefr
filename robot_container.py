@@ -183,24 +183,15 @@ class RobotContainer:
             else:
                 button.onTrue(self.superstructure.set_goal_command(goal))
 
-        self._function_controller.leftBumper().whileTrue(
+        self._function_controller.leftBumper().onTrue(
             cmd.parallel(
                 self.superstructure.set_goal_command(self.superstructure.Goal.FUNNEL),
                 self.intake.set_desired_state_command(self.intake.SubsystemState.FUNNEL_INTAKE),
-            ).repeatedly().until(lambda: self.intake.has_coral()).andThen(
-                cmd.parallel(
-                    self.superstructure.set_goal_command(self.superstructure.Goal.DEFAULT),
-                    self.intake.set_desired_state_command(self.intake.SubsystemState.HOLD),
-                    self.rumble_command(self._driver_controller, 0.2, 0.25),
-                    self.rumble_command(self._function_controller, 0.2, 0.25),
-                )
             )
         ).onFalse(
             cmd.parallel(
                 self.superstructure.set_goal_command(self.superstructure.Goal.DEFAULT),
-                self.intake.set_desired_state_command(self.intake.SubsystemState.HOLD),
-                self.rumble_command(self._driver_controller, 0, 0.25),
-                self.rumble_command(self._function_controller, 0, 0.25),
+                self.intake.set_desired_state_command(self.intake.SubsystemState.HOLD)
             )
         )
 
@@ -208,13 +199,6 @@ class RobotContainer:
             cmd.parallel(
                 self.superstructure.set_goal_command(self.superstructure.Goal.FLOOR),
                 self.intake.set_desired_state_command(self.intake.SubsystemState.CORAL_INTAKE),
-            ).repeatedly().until(lambda: self.intake.has_coral()).andThen(
-                cmd.parallel(
-                    self.superstructure.set_goal_command(self.superstructure.Goal.DEFAULT),
-                    self.intake.set_desired_state_command(self.intake.SubsystemState.HOLD),
-                    self.rumble_command(self._driver_controller, 0.2, 0.25),
-                    self.rumble_command(self._function_controller, 0.2, 0.25),
-                )
             )
         ).onFalse(
             cmd.parallel(
@@ -240,6 +224,12 @@ class RobotContainer:
 
         self._function_controller.rightBumper().whileTrue(
             self.intake.set_desired_state_command(self.intake.SubsystemState.CORAL_OUTPUT)
+        ).onFalse(
+            self.intake.set_desired_state_command(self.intake.SubsystemState.HOLD)
+        )
+
+        (self._function_controller.rightBumper() & self._function_controller.start()).onTrue(
+            self.intake.set_desired_state_command(self.intake.SubsystemState.ALGAE_OUTPUT)
         ).onFalse(
             self.intake.set_desired_state_command(self.intake.SubsystemState.HOLD)
         )
