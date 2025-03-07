@@ -1,3 +1,4 @@
+from typing import Callable
 import commands2
 import commands2.button
 from commands2 import cmd, InstantCommand
@@ -101,9 +102,9 @@ class RobotContainer:
         return pose
 
     def _setup_swerve_requests(self):
-        common_settings = lambda req: req.with_deadband(self._max_speed * 0.01).with_rotational_deadband(self._max_angular_rate * 0.01).with_drive_request_type(
-            swerve.SwerveModule.DriveRequestType.OPEN_LOOP_VOLTAGE
-        )
+        common_settings: Callable[[swerve.requests.SwerveRequest], swerve.requests.SwerveRequest] = lambda req: req.with_deadband(self._max_speed * 0.01).with_rotational_deadband(self._max_angular_rate * 0.01).with_drive_request_type(
+            swerve.SwerveModule.DriveRequestType.VELOCITY
+        ).with_steer_request_type(swerve.SwerveModule.SteerRequestType.MOTION_MAGIC_EXPO)
         self._field_centric = common_settings(swerve.requests.FieldCentric())
         self._robot_centric = common_settings(swerve.requests.RobotCentric())
         self._brake = swerve.requests.SwerveDriveBrake()
@@ -174,7 +175,7 @@ class RobotContainer:
         }
 
         for button, goal in goal_bindings.items():
-            if goal is self.superstructure.Goal.L3_ALGAE or goal is self.superstructure.Goal.L2_ALGAE or goal is self.superstructure.Goal.PROCESSOR:
+            if goal is self.superstructure.Goal.L3_ALGAE or goal is self.superstructure.Goal.NET or goal is self.superstructure.Goal.L2_ALGAE or goal is self.superstructure.Goal.PROCESSOR:
                 (button.whileTrue(
                     self.superstructure.set_goal_command(goal)
                     .alongWith(self.intake.set_desired_state_command(self.intake.SubsystemState.ALGAE_INTAKE)))
