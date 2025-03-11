@@ -102,7 +102,7 @@ class Constants:
         )
 
         CANCODER_DISCONTINUITY = 0.8
-        CANCODER_OFFSET = 0.6541
+        CANCODER_OFFSET = 0.380126953125
 
         SETPOINT_TOLERANCE = 0.03125
 
